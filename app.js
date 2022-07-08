@@ -55,6 +55,3 @@ const game = () => {
         console.log("You win")
     }
 }
-
-
-game()

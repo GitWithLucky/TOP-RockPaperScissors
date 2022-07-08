@@ -1,0 +1,52 @@
+body {
+    background-color: #000;
+    color: #FFF;
+    text-align: center;
+}
+
+.game {
+    display: flex;
+    justify-content: space-between;
+    padding:  3em 0;
+}
+
+img {
+    border-radius: 50%;
+    width: 9em;
+    height: 9em;
+}
+
+.image-click {
+    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
+}
+
+.box {
+    display: flex;
+    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
+    padding: 0.5em;
+    justify-content: space-between;
+    padding: 2em;
+}
+
+.pic {
+    padding-right: 2em;
+}
+
+.human {
+    margin-left: 2em;
+}
+
+.bot {
+    margin-right: 2em;
+}
+
+.start {
+    width: 14em;
+    height: 4em;
+    font-weight: 900;
+    font-size: 1em;
+    align-self: center;
+    background: #000;
+    color: #FFF;
+    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
+}
