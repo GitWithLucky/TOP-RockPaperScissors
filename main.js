@@ -1,88 +1,83 @@
-"use strict"
-
-const playerRock = document.getElementsByClassName('pic')[0];
-const playerPaper = document.getElementsByClassName('pic')[1];
-const playerScissors = document.getElementsByClassName('pic')[2];
-const startBtn = document.querySelector('button');
-let computerSelection; let playerSelection; let score; let yourTotal; let botTotal;
+const playerRock = document.getElementsByClassName('pic')[0],
+    playerPaper = document.getElementsByClassName('pic')[1],
+    playerScissors = document.getElementsByClassName('pic')[2],
+    startBtn = document.querySelector('button');
+let computerSelection, playerSelection, scoreCard, yourTotal, botTotal;
 
 
 const yourScore = document.createElement("div");
-let holderMan = document.createElement("h2");
-holderMan.appendChild(document.createTextNode("Your Score"));
-yourScore.appendChild(holderMan);
-let yourResult = document.createElement("h1");
-yourResult.appendChild(document.createTextNode(0));
+let holderManScore = document.createElement("h2"),
+    yourResult = document.createElement("h1");
+holderManScore.appendChild(document.createTextNode("Your Score"));
+yourScore.appendChild(holderManScore);
+yourResult.appendChild(document.createTextNode(''));
 yourScore.appendChild(yourResult);
 
 
 const botScore = document.createElement("div");
-let holderBot = document.createElement("h2");
-holderBot.appendChild(document.createTextNode("Bot's Score"));
-botScore.appendChild(holderBot);
-let botResult = document.createElement("h1");
-botResult.appendChild(document.createTextNode(0));
+let holderBotScore = document.createElement("h2"),
+    botResult = document.createElement("h1");;
+holderBotScore.appendChild(document.createTextNode("Bot's Score"));
+botScore.appendChild(holderBotScore);
+botResult.appendChild(document.createTextNode(''));
 botScore.appendChild(botResult);
 
+const resultSheet = document.createElement("div");
+resultSheet.classList.add("result");
+resultSheet.appendChild(yourScore);
+resultSheet.appendChild(botScore);
+
+const finalResult = document.createElement("h1");
+finalResult.appendChild(document.createTextNode(''));
+
 startBtn.addEventListener('click', (e) => {
+    document.querySelector('.box').style.display = 'unset';
     e.target.style.display = 'none';
-    document.querySelector(".human").prepend(yourScore);
-    document.querySelector(".bot").prepend(botScore);
+    e.target.textContent = 'RESTART';
 
+    if (e.target.previousElementSibling.className == 'box') {
+        document.body.insertBefore(resultSheet, e.target);
+        document.body.insertBefore(finalResult, e.target);
+    }
+    botResult.textContent = 0;
+    yourResult.textContent = 0;
+    finalResult.textContent = ''
 
-    playerRock.addEventListener('click', () => {
-        playerSelection = 'Rock';
-        computerSelection = computerPlay();
-        e.target.classList.add('image-click');
-        setTimeout(() => e.target.classList.remove('image-click'),200);
-        score = playRound(computerSelection, playerSelection);
-        updateScores(score, playerSelection, computerSelection);
-    });
+    playerRock.addEventListener('click', () => gamePlay('Rock'));
 
-    playerPaper.addEventListener('click', () => {
-        playerSelection = 'Rock';
-        computerSelection = computerPlay();
-        e.target.classList.add('image-click');
-        setTimeout(() => e.target.classList.remove('image-click'),200);
-        score = playRound(computerSelection, playerSelection);
-        updateScores(score, playerSelection, computerSelection);
-    });
+    playerPaper.addEventListener('click', () => gamePlay('Paper'));
 
-    playerScissors.addEventListener('click', () => {
-        playerSelection = 'Scissors';
-        computerSelection = computerPlay();
-        e.target.classList.add('image-click');
-        setTimeout(() => e.target.classList.remove('image-click'),200);
-        score = playRound(computerSelection, playerSelection);
-        updateScores(score, playerSelection, computerSelection)
-    });
+    playerScissors.addEventListener('click', () => gamePlay('Scissors'));
 
 });
 
-const updateScores = (score, playerSelection, computerSelection) => {
-    yourTotal = document.querySelector('.box').previousElementSibling.lastElementChild;
-    botTotal = document.querySelectorAll('.box')[1].previousElementSibling.lastElementChild;
-    const finalResult = document.createElement("h1");
-    finalResult.appendChild(document.createTextNode(''));
 
-    if (score === 1) {
-       yourTotal.textContent = parseInt(yourTotal.textContent) + 1;
-       finalResult.replaceChild(document.createTextNode(`${playerSelection} defeats ${computerSelection}`),finalResult.lastChild);   
-    } else if (score === -1) {
+const gamePlay = (choice) => {
+    playerSelection = choice;
+    computerSelection = computerPlay();
+    scoreCard = playRound(computerSelection, playerSelection);
+    updateScores(scoreCard, playerSelection, computerSelection);
+};
+
+const updateScores = (scoreCard, playerSelection, computerSelection) => {
+    yourTotal = document.querySelector(".result").firstElementChild.lastElementChild;
+    botTotal = document.querySelector(".result").lastElementChild.lastElementChild;
+
+    if (scoreCard === 1) {
+        yourTotal.textContent = parseInt(yourTotal.textContent) + 1;
+        finalResult.textContent = `${playerSelection} defeats ${computerSelection}`;
+    } else if (scoreCard === -1) {
         botTotal.textContent = parseInt(botTotal.textContent) + 1;
-        finalResult.replaceChild(document.createTextNode(`${computerSelection} defeats ${playerSelection}`),finalResult.lastChild);
+        finalResult.textContent = `${computerSelection} defeats ${playerSelection}`;
     } else {
-        finalResult.replaceChild(document.createTextNode(`It's a tie. You both picked ${computerSelection}`), finalResult.lastChild);
+        finalResult.textContent = `It's a tie. You both picked ${computerSelection}`;
     }
-    document.body.replaceChild(finalResult, document.body.lastChild);
 
-    if (yourTotal.textContent == 5) {
-        finalResult.replaceChild(document.createTextNode("Congrats! You have WON!!"), finalResult.lastChild);
-        document.body.replaceChild(finalResult, document.body.lastChild);
+    if (parseInt(yourTotal.textContent) === 5) {
+        finalResult.textContent = "Congrats! You have WON!!";
         endGame();
-    } else if (botTotal.textContent == 5) {
-        finalResult.replaceChild(document.createTextNode("Uh Uh! You have LOST!!"), finalResult.lastChild);
-        document.body.replaceChild(finalResult, document.body.lastChild);
+    } else if (parseInt(botTotal.textContent) === 5) {
+        finalResult.textContent = "Uh Uh! You have LOST!!";
         endGame();
     }
 };
@@ -90,10 +85,10 @@ const updateScores = (score, playerSelection, computerSelection) => {
 const computerPlay = () => {
     const options = ["Rock", "Paper", "Scissors"];
     const index = Math.floor(Math.random() * 3);
-    return options[index];    
+    return options[index];
 };
 
-const playRound = (computerSelection,playerSelection) => {
+const playRound = (computerSelection, playerSelection) => {
     if (playerSelection === computerSelection) {
         return 0;
     } else if (computerSelection === "Rock") {
@@ -116,5 +111,6 @@ const playRound = (computerSelection,playerSelection) => {
 };
 
 const endGame = () => {
-    
+    startBtn.style.display = 'unset';
+    document.querySelector('.box').style.display = 'none';
 }

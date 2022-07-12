@@ -1,52 +1,56 @@
+@import 
+url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Big Shoulders Display', cursive;
+}
+
 body {
     background-color: #000;
     color: #FFF;
     text-align: center;
 }
 
-.game {
-    display: flex;
-    justify-content: space-between;
-    padding:  3em 0;
-}
-
-img {
-    border-radius: 50%;
-    width: 9em;
-    height: 9em;
-}
-
-.image-click {
-    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
-}
-
-.box {
-    display: flex;
-    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
-    padding: 0.5em;
-    justify-content: space-between;
-    padding: 2em;
+.heading {
+    margin: 0;
 }
 
 .pic {
-    padding-right: 2em;
+    border-radius: 50%;
+    width: 13rem;
+    height: 13rem;
+    margin: 2.5rem 1rem;
+    box-shadow: 0 5px 8px palevioletred, 0 -5px 8px palevioletred;
+    transition: 200ms;
 }
 
-.human {
-    margin-left: 2em;
-}
-
-.bot {
-    margin-right: 2em;
+.pic:hover{
+    transform: scale(1.2);
 }
 
 .start {
-    width: 14em;
-    height: 4em;
-    font-weight: 900;
-    font-size: 1em;
-    align-self: center;
+    width: 14rem;
+    height: 4rem;
+    border-radius: 64px;
+    font-weight: bold;
+    font-size: 1.4rem;
     background: #000;
     color: #FFF;
-    box-shadow: 0 5px 8px rgb(218, 213, 213),0 -5px 8px rgb(218, 213, 213);
+    box-shadow: 0 5px 8px palevioletred,0 -5px 8px palevioletred;
+}
+
+.start:hover {
+    transform: scale(1.2);
+}
+
+.box {
+    margin: 5rem 0;
+}
+
+.result {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 25rem;
 }
